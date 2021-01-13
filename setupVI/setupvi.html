@@ -3,14 +3,14 @@
 	<style>
 .ct {text-align: center;font-size: 35px}
 pre code {
-	background-color: #ffffff;
+	background-color: #004400;
 	border: 1px solid #dd546e;
 	display: block;
 	padding: 10px;
-	color: #990099;
+	color: #ffff00;
 }
 body {
-	color: #007700;
+	color: #aa00aa;
 	background-color: #000000;
 }
 table {
@@ -35,20 +35,58 @@ td {
 	<header class="ct"><u>Setting up built-in VI/VIM as an IDE</u></header>
 	<h1 id="Sum">Summary</h1>
 	<h2 id="ovw">Overview</h2>
+	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/overview.png" alt="VI/VIM as IDE" height="400" width="700">
 	<h2 id="vimrc">~/.vimrc</h2>
 	<pre><code>
 	syntax on
 	set number
 	set hlsearch
-	set cindent
 	set ts=8
-	set autoindent
 	set smartindent
 	bel term
 	</code></pre>
-	<h2 id="prog">VIM packages</h2>
+	<h2 id="prog">VIM packages (~/.vim/plugin/*.vim)</h2>
+	<ul>
+	<li><a href="http://www.vim.org/scripts/script.php?script_id=3599">automatic bracket pairing</a></li>
+	<li><a href="http://www.vim.org/scripts/script.php?script_id=1643">pop-up tab for similar text in vi/vim insert mode</a></li>
+	<ul>
+	<li>During inserting text, press `tab` key to call a pop-up tab listing all textstrings (identified by space-separation)</li>
+	<li>Use `enter` key to select the chosen textstring</li>
+	<li>To use the ordinary `tab` spacing function, a space needs to be explicitly inserted before pressing `tab`</li>
+	</ul>
+	</ul>
+
 	<h1 id="Exp">Explanation</h1>
+	<p>
+	In vi/vim normal mode, you can type ":" to indicate the line being typed is a command OR "/" to indicate the line being typed is a plain textstring to be searched.  In <b>.vimrc</b> file each line is a command, hence no need to include the ":"
+	</p>
+	<ul>
+	<li><b>syntax on</b>: command colour within vi/vim (according to the file extension)</li>
+	<li><b>set number</b>: show line number within vi/vim (opposite command: `<b>set nonumber</b>`)</li>
+	<li><b>set hlsearch</b></li>
+	<ul>
+	<li>In normal mode use `<b>/[text]</b>` to search the textstring [text] within the vi/vim editor window section(s)</li>
+	<li>Show (yellow) highlight withinin vi/vim search (use <b>noh</b> to revert highlighting after search)</li>
+	</ul>
+	<li><b>set ts=8</b></li>
+	<ul>
+	<li><b>ts</b> = <b>t</b>ab <b>s</b>pace</li>
+	<li>Every tab has a standard ts value in vi/vim and is converted into spaces when saved, which can cause conflict between IDE/text editors</li>
+	<li>A vi/vim <b>ts</b> has a max value of 8 spaces; ts=4 means 2 spaces; ts=2 means 4 spaces; ts=8 means 1 tab character</li>
+	</ul>
+	<li><b>set smartindent</b>: automatic indent one <b>ts</b> unit for newlines within a pair of brackets - (  ) OR [  ] OR {  }</li>
+	<li><b>bel (vert) term</b></li>
+	<ul>
+	<li><b>bel</b>: below; <b>term</b>: terminal -- this command would initiate a plain terminal below the vi/vim editor</li>
+	<li>An alternative is add <b>vert</b> (vertical) in the command (before/after the <b>bel</b>) -- the combination would add a terminal at the right hand side of the active vi/vim editor section</li>
+	</ul>
+	</ul>
 	<a href="#top">Back to the Top</a>
+	<h1 id="open">Open Other Files in the Same Window</h1>
+	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/horizontalVI.png" alt="horizontal section" height="400" width="700">
+	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/verticalVI.png" alt="vertical section" height="400" width="700">
+	<a href="#top">Back to the Top</a>
+	<h1 id="freq">Frequently-used Key Bindings</h1>
 	<h1 id="link">Other Useful Links</h1>
 	<a href="#top">Back to the Top</a>
         </body>
