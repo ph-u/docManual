@@ -10,7 +10,7 @@ pre code {
 	color: #ffff00;
 }
 body {
-	color: #aa00aa;
+	color: #dd00dd;
 	background-color: #000000;
 }
 table {
@@ -33,8 +33,19 @@ td {
 	</head>
 	<body>
 	<header class="ct"><u>Setting up built-in VI/VIM as an IDE</u></header>
+	<h1 id="asm">Assumption</h1>
+	<p>Readers know basic usage of the built-in vi/vim program, for example:</p>
+	<table>
+	<tr><th>Keys</th><th>Function</th></tr>
+	<tr><td>[i]</td><td>insert mode</td></tr>
+	<tr><td>[esc]</td><td>exit insert mode, back to normal mode</td></tr>
+	<tr><td>:w</td><td>save file</td></tr>
+	<tr><td>:q</td><td>quit file (successful when file is saved/unchanged)</td></tr>
+	<tr><td>:wq</td><td>save & quit file</td></tr>
+	<tr><td>:q!</td><td>quit file & discard unsaved changes</td></tr>
+	</table>
 	<h1 id="Sum">Summary</h1>
-	<h2 id="ovw">Overview</h2>
+	<h2 id="ovw">Expected appearance</h2>
 	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/overview.png" alt="VI/VIM as IDE" height="400" width="700">
 	<h2 id="vimrc">~/.vimrc</h2>
 	<pre><code>
@@ -55,6 +66,7 @@ td {
 	<li>To use the ordinary `tab` spacing function, a space needs to be explicitly inserted before pressing `tab`</li>
 	</ul>
 	</ul>
+	<a href="#top">Back to the Top</a>
 
 	<h1 id="Exp">Explanation</h1>
 	<p>
@@ -82,20 +94,44 @@ td {
 	</ul>
 	</ul>
 	<a href="#top">Back to the Top</a>
-	<h1 id="open">Open Other Files in the Same Window</h1>
+	<h1 id="open">Multiple Files in the Same Window</h1>
 	<p>
 	Sectioning can be called in vi/vim normal mode.  Same/Different files can be opened within the same window at the same time.  Commands are functional within the same window across all editor sections.  All sections are always equal in width for vertical sectioning and equal in height for horizontal sectioning.  Each window (across sections) only has one editing point and all other sections can be read as plain text.
 	</p>
 	<h2 id="hori">Horizontal section(s) -- command `:sp [relative/path/filename]`</h2>
 	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/horizontalVI.png" alt="horizontal section" height="400" width="700">
+	<a href="#top">Back to the Top</a>
 	<h2 id="vert">Vertical section(s) -- command `:vsp [relative/path/filename]`</h2>
 	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/verticalVI.png" alt="vertical section" height="400" width="700">
+	<a href="#top">Back to the Top</a>
 	<h2 id="high">Highlighting across vertical sections</h2>
 	<img src="https://raw.githubusercontent.com/ph-u/docManual/master/setupVI/highlightVI.png" alt="highlighting" height="400" width="700">
 	<a href="#top">Back to the Top</a>
-	<h1 id="freq">Frequently-used Key Bindings</h1>
+	<h1 id="freq">Frequently-used Key Bindings (in normal mode only)</h1>
+	<table>
+	<tr><th>Keys</th><th>Function</th></tr>
+	<tr><td>[control][w][w]</td><td>navigate active point between sections within vi/vim window</td></tr>
+	<tr><td>[shift][6]</td><td>move active point to start of line</td></tr>
+	<tr><td>[shift][4]</td><td>move active point to end of line</td></tr>
+	<tr><td>[b]</td><td>move active point to the previous identified word</td></tr>
+	<tr><td>[u]</td><td>undo</td></tr>
+	<tr><td>[control][r]</td><td>redo</td></tr>
+	<tr><td>[99][enter]</td><td>move active point down [99] lines</td></tr>
+	<tr><td>[99][k]</td><td>move active point up [99] lines</td></tr>
+	<tr><td>[d][d]</td><td>cut a line</td></tr>
+	<tr><td>[y][y]</td><td>copy a line</td></tr>
+	<tr><td>[shift][p]</td><td>paste a line above active point/line</td></tr>
+	<tr><td>[p]</td><td>paste a line below active point/line</td></tr>
+	</table>
 	<a href="#top">Back to the Top</a>
 	<h1 id="link">Other Useful Links</h1>
-	<a href="#top">Back to the Top</a>
+	<ul>
+	<li><a href="https://hea-www.harvard.edu/~fine/Tech/vi.html">A key bindings complete list</a></li>
+	<li><a href="https://www.vim.org/scripts/script_search_results.php">external plugin / packages</a></li>
+	<li><a href="https://www.tutorialspoint.com/vim/vim_using_vim_as_ide.htm">Other commands</a></li>
+	<li><a href="https://technews365.info/search-and-replace-using-vi-editor/">Search and replace</a></li>
+	<li><a href="https://stackoverflow.com/questions/235839/indent-multiple-lines-quickly-in-vi">Indent multiple lines</a></li>
+	<li><a href="https://www.cs.oberlin.edu/~kuperman/help/vim/selection.html">Text selection (and other tips)</a></li>
+	</ul>
         </body>
 </html>
