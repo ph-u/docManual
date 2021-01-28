@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .ct {text-align: center;font-size: 35px}
+        pre code {
+            background-color: #777777;
+            border: 1px solid #dd546e;
+            display: block;
+            padding: 10px;
+            color: #990099;
+        }
+        body {
+            color: #00aa00;
+            background-color: #000000;
+            }
+    </style>
+    <head>
+        <title>TeX & Git</title>
+        <meta charset="UTF-8">
+        <meta name="author" content="ph-u">
+        <meta name="description" content="Introduction to TeX, Git & BibTeX">
+        <!-- documentation initiated on 20200829 -->
+    </head>
+    <body>
+        <header class="ct"><u>A Guide on Convenient Research Writings</u></header>
+        <h1>Content</h1>
+        <ul>
+            <li><a href="#code">Quick Codes</a></li>
+            <li><a href="#aim">Motivations</a></li>
+            <li><a href="#tex">TeX: Powerful Typewriting Language</a></li>
+            <li><a href="#git">Git: Version Control</a></li>
+            <li><a href="#bib">bib: Citation file format</a></li>
+            <li><a href="#prep">Computational Preparation</a></li>
+            <ul>
+                <li><a href="#cli">Get Familiar with the Terminal</a></li>
+                <li><a href="#gvc">Set-up git</a></li>
+                <li><a href="#pTex">Get the TeX repository working</a></li>
+                <li><a href="#pbib">Make the Bibliography</a></li>
+            </ul>
+            <li><a href="#cite">Citations</a></li>
+            <li><a href="#fig">Figures</a></li>
+            <li><a href="#tab">Tables</a></li>
+            <li><a href="#eqn">Equations</a></li>
+            <li><a href="#hplk">Hyperlinks</a></li>
+            <li><a href="#sep">Separating Sections</a></li>
+            <li><a href="#oth">Others</a></li>
+            <ul>
+                <li><a href="#manCMD">Manual commands</a></li>
+                <li><a href="#titpg">Manual titlepage formatting</a></li>
+                <li><a href="#supInfo">Supplementary Information section</a></li>
+            </ul>
+            <li><a href="#trap">Inevitable Trap(s)</a></li>
+            <li><a href="#end">Conclusion</a></li>
+            <li><a href="#ref">External Resource Bin</a></li>
+        </ul>
+
+        <h1 id="code">Quick Codes</h1>
+        <table>
+            <tr>
+                <td><a href="#TeXstruc">TeX basic framework</a></td>
+                <td><a href="#bibGen">article bib entry</a></td>
+                <td><a href="#bibMake">Make a bibliography</a></td>
+                <td><a href="#bibTeX">Bib in TeX</a></td>
+                <td><a href="#shCMD">common shell commands</a></td>
+            </tr>
+            <tr>
+                <td><a href="#figCode">Figures</a></td>
+                <td><a href="#tabCode">Tables</a></td>
+                <td><a href="#eqCode">Equations</a></td>
+                <td><a href="#hplkCMD">Hyperlinks</a></td>
+                <td><a href="#viGen">common vi commands</a></td>
+            </tr>
+            <tr>
+                <td><a href="#sbfCode">subfiles</a></td>
+                <td><a href="#newCode">manual commands</a></td>
+                <td><a href="#titCode">manual cover page</a></td>
+                <td><a href="#supCode">supplementary information</a></td>
+            </tr>
+            <tr>
+                <td><a href="#gitCMD">common git commands</a></td>
+                <td><a href="#gitCheck">check git installation</a></td>
+                <td><a href="#gitUser">set-up git</a></td>
+                <td><a href="#gitLog">git history log</a></td>
+                <td><a href="#gitStat">check git status</a></td>
+            </tr>
+        </table>
+        
+        <h1 id="aim">Motivations</h1>
+        <p>
+            Portal Document Format (pdf) is still the current mainstream file type for research writings.  Recently some suggested an <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007128">alternative</a> but it is still a concept.  So an efficient way to make a pdf is still important.
+        </p>
+        <p>
+            <a href="https://www.tug.org/whatis.html">TeX</a> is a typesetting pre-compile computer language developed by <a href="https://en.wikipedia.org/wiki/TeX">Donal Knuth</a> in 1978.  It is a low level (i.e. high flexibility) interpretative (i.e. command words for the computer is reader-friendly) language with high level user interface (i.e. reader-friendly) come with zero cost.  It was intended to handle mathematical writing in the academic publishing environment.  So using TeX to fiddle academic writing is intended to be convenient; the only requirement is the correct use of the language.
+        </p>
+        <p>
+            <a href="https://en.wikipedia.org/wiki/Git">Git</a> is a distributed (i.e. no central server hosting users' data) version-control (i.e. back-up) system for tracking code changes.  It was proposed by Linus Torvalds in 2005, intended to provide a fast and secure channel for programmers doing group projects.  Linus Torvalds is also the developer of Linux, a branch of UNIX kernel (MacOS is also branched from UNIX).  Git is a free and <a href="https://github.com/git/git">open-source</a> software under GNU General Public License Version 2 licence.  Git directories are independent of network access (i.e. works even no internet) containing a complete history of the repository (i.e. the whole folder tree containing all files inside the tree) once initialised.  Since TeX is a computer language, using git to track changes and back-up with a good TeX interface can aid the speed and efficiency of academic writing.
+        </p>
+        <p>
+            <a href="https://www.bibtex.com/">BibTeX</a> is a reference management program in <a href="https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex">TeX</a>.  Other programs for the same purpose include <a href="https://www.mendeley.com/?interaction_required=true">Mendeley</a> and <a href="https://endnote.com/">EndNote</a>.  It was developed by Oren Patashnik and Leslie Lamport in 1985 written in <a href="https://en.wikipedia.org/wiki/WEB">WEB system</a> (the WEB system was developed by Donald Knuth).  It is primarily for handling citations with 14 <a href="https://www.bibtex.com/e/entry-types/">entry types</a>.  A good use of BibTeX can make citations and reference lists formatting easy and fast in a TeX document.
+        </p>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="tex">TeX: Powerful Typewriting Language</h1>
+        <img src="https://i.stack.imgur.com/cVHQP.png" alt="Comparison graph: TeX & WYSIWYG" height="400" width="800">
+        <p>
+            This is an adapted section from <a href="https://www.imperial.ac.uk/people/s.pawar">Dr. Samraat Pawar</a>'s Jupyter <a href="https://mhasoba.github.io/TheMulQuaBio/notebooks/04-LaTeX.html">notebook</a>.  This section is for highlighting the crucial elements of TeX that leads to the implementation into <a href="https://www.overleaf.com/">overleaf.com</a>.
+        </p>
+        Risks:
+        <ul>
+            <li>can be difficult to manages revisions especially if not authors know TeX</li>
+            <li>Big Tables typing is time consuming</li>
+        </ul>
+
+        Basic TeX document (extention: .tex) <a href="https://www.overleaf.com/learn/latex/Creating_a_document_in_LaTeX">structure</a>
+        <pre id="TeXstruc"><code>
+            \documentclass[a4paper,11pt]{article}
+            \usepackages{pkgA, pkgB,pkgC}
+            \begin{document}
+                content content content.  More content here.
+
+                next paragraph\\
+                next line
+            \end{document}
+        </code></pre>
+
+        Important point:
+        <ol>
+            <li>indentations don't matter</li>
+            <li>capitalisations matters</li>
+            <li>every "\begin{}" needs an "\end{}"</li>
+            <li>an empty line = next paragraph</li>
+            <li>two backslashes "\\" = next line</li>
+            <li>comments: "%"</li>
+            <li>printing special characters, e.g. printing the "comment character" for "percentage": "\%"</li>
+            <li>inline <a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols">maths</a> are quoted inside "$", e.g. "text text $\omega$ text"</li>
+        </ol>
+
+        A few other useful packages (apart from bibtex):
+        <ul>
+            <li><a href="https://www.texdoc.net/texmf-dist/doc/latex/geometry/geometry.pdf">geometry</a>: customising margin spaces of the pdf</li>
+            <li><a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">amsmath</a> & <a href="http://milde.users.sourceforge.net/LUCR/Math/mathpackages/amssymb-symbols.pdf">amssymb</a></li>: additional maths <a href="https://texdoc.net/texmf-dist/doc/latex/amsmath/amsldoc.pdf">formats</a> and symbols; there are much <a href="https://tex.stackexchange.com/questions/397453/what-are-all-the-math-packages-about">more</a>
+            <li><a href="https://www.overleaf.com/learn/latex/Errors/LaTeX_Error:_Unknown_float_option_%60H'">float</a>: the "H" option force figures to be embedded <b>EXACTLY</b> between the paragraphs that users' have coded</li>
+            <li><a href="https://texblog.org/2012/05/30/generate-latex-tables-from-csv-files-excel/">csvsimple</a>: easy embed csv directly into pdf but not up to the publication standard of visuals</li>
+            <li><a href="https://en.wikibooks.org/wiki/LaTeX/Hyperlinks">hyperref</a>: clickible internal/external <a href="https://www.overleaf.com/learn/latex/Hyperlinks">links</a> embedded in the pdf</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="git">Git: Version Control</h1>
+        <img src="https://mhasoba.github.io/TheMulQuaBio/_images/git.png" alt="visualised Git flow logic" width="540" height="490">
+        <p>
+            This is an adapted section from <a href="https://www.imperial.ac.uk/people/s.pawar">Dr. Samraat Pawar</a>'s Jupyter <a href="https://mhasoba.github.io/TheMulQuaBio/notebooks/03-Git.html">notebook</a>.  This section is for highlighting the crucial elements of Git that leads to an effective usage in the <a href="https://www.overleaf.com/">overleaf.com</a> repository.
+        </p>
+        Very simplified git logic in a nutshell (using the keywords in the above illustration):
+        <ol>
+            <li>your working desk = workspace</li>
+            <li>your bookshelf = index</li>
+            <li>a trolley = local repository (commonly named "origin")</li>
+            <li>a mini-storeroom = remote repository (commonly named "master")</li>
+            <li>you work on your working desk and put the finished homework on the bookshelf</li>
+            <li>but you want to prevent your homework being lost, so you make a copy and put the copy in the trolley</li>
+            <li>and you "push" the trolley to the mini-storeroom where at the venue they also do a copy for storage</li>
+            <li>so eventually your work has two shadow copies at different storage places; if needed, you can either update ("push" again to refresh the version in the remote storage) or revert ("rm" to the last version) your work </li>
+            <li>in a group project, however, not only one person can edit and push; so to ensure the "master" is the latest version, git require users to confirm sync with the desktop version first by "pull"</li>
+            <li>"pull" is a bold move and should be done with confidence (because it can erase stuff that you did but diverged from the "master"); a "fetch" can be done first to peek into what is there in "master"</li>
+            <li>every progression (including "master") is called a "branch"</li>
+        </ol>
+        <img src="https://mhasoba.github.io/TheMulQuaBio/_images/VC.png" alt="software development progress-line" width="630" height="350">
+        <p>
+            For every time you interact with "origin" (the trolley), you need to leave a message in the history.  The message is called a "commit".  It is necessary for "push" and is a permanent verbal record of what you want to leave as the history.  It can take standard characters, special keyboard characters and <a href="https://www.webfx.com/tools/emoji-cheat-sheet/">emoji</a>.  Unfortunately emoji is not supported by Overleaf commit messages, so you can only see the text but not the emoji icon in the Overleaf server.
+        </p>
+        Here are some useful git commands
+        <pre id="gitCMD"><code>
+            git fetch
+            git pull origin master
+            git add -A
+            git commit -m "xx'x ??? :simple_smile:"
+            git push origin master
+        </code></pre>
+        In the above code block,
+        <ul>
+            <li>"fetch", "pull", "add", "commit", "push" are all functional options of the system "git"</li>
+            <li>"origin", "master" are names of the local and remote repository respectively; they can change names, another name is especially needed if your work is not for the main branch</li>
+            <li>"-A" is an option for "add" function, indicating you want to address all modified files in your repository in one commit; you can individually add commit messages for each file you've modified by replacing this option with the filename</li>
+            <li>"-m" is an option for "commit" function, indicating your message as a textstring indicated within the quotes (either single or double quotes but has to be only one consistent pair)</li>
+        </ul>
+        Setting up <a href="https://git-scm.com/">git</a> is not difficult (in the section <a href="#prep">below</a>) but there are a few important points
+        <ul>
+            <li>git username has to be the same as the overleaf account; or else git will identify there are multiple people collaborating and overleaf will reject the connection because that repository has not shared with this git username</li>
+            <li>using git, you can always commit any files no matter how large the file is; but to "push", there's a size limit of 50MB to protect the remote server (code files should not be that big) -- sooner or later you will get stuck because of this issue (and here's a lazy <a href="#trap">solution</a> if the repository is used & owned only by you) unless you don't have files with that big size in the local repository</li>
+            <li>using a special file called ".gitignore", you can ignore version control of some files/folders with designated pattern in their git repository paths</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="bib">bib: Citation file format</h1>
+        The common <a href="https://www.bibtex.com/e/entry-types/">entry format</a> of a typical journal article is
+        <pre id="bibGen"><code>
+            @article{tag,
+                author="surname, given name and surname2, given2 name2 and surname3, given3 name3",
+                title="this is a title",
+                journal="what a journal",
+                year="0000",
+                volume="0",
+                number="0",
+                pages="0000--9999",
+                doi="0000.99992/28.x",
+            }
+        </code></pre>
+        There are a few points to note:
+        <ol>
+            <li>double quotes can be replaced by curly brackets "{ }"</li>
+            <li>the "tag" can be any one textstring (with/without underscores, no spaces) a user like and it is necessary for citation using bibtex</li>
+            <li>new lines and indentation is not necessary</li>
+            <li>empty field(s), e.g. if an old paper has no doi, can be omitted (i.e. the whole line can be skipped)</li>
+            <li>comma at the last entry can be omitted</li>
+            <li>the author format "surname, given name" is the easiest for bibtex; using "given name surname" format may make bibtex to read a name wrong</li>
+            <li>the "and" between every author is needed</li>
+        </ol>
+        <p>
+            Google Scholar has BibTex entry functions, available in an <a href="https://gottscott.github.io/2016/08/30/how-to-do-citations-in-latex.html">add-on</a> button and a typical <a href="https://www.youtube.com/watch?v=7B-2JUkiMfs">link</a> form.  However, note that its accuracy of extracting the correct information is around 90%.  Double checking the information may be needed especially when you see the number of entry fields you can copy is less than 5.  <b>A typical Google Scholar BibTeX entry for a published research article is 9 lines of content and without the doi field.</b>
+        </p>
+        <p>
+            Entry fields are solely depending on the format of journal required in the academic writing.  Any formatting issues can be fiddled with TeX commands easily, including what to be included in a reference list, punctuations, bold/italic,  double quotes and other minor stuff.  Details are documented <a href="#pbib">below</a>.
+        </p>
+        <p>
+            Users can use one TeX bibliography file for each reference list.  All bib entries have to be lined up in a single ".bib" file in any order and all entries will appear in the reference list.  So it is necessary to only include references cited in the writing in the ".bib" file.  We can use some simple shell code (as a script) to do this matching and collecting.  Ask if I forget to send you the scripts and show you how to use them.  Ask if you forget how to use these scripts.
+        </p>       
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="prep">Computational Preparation</h1>
+        <h2 id="cli">Get Familiar with the Terminal</h2>
+        <p>
+            MacOS and Linux OS (operation system) share the same UNIX core.  Both use shell (.sh) interface but some commands are specific to MacOS.  Below are some common commands we'll be using.  Be careful when you do file manipulation because UNIX does not have a "Trash can".  If you replace/remove a file/folder by accidient, it's gone.  Do any command only if you know what are you telling the computer to do.
+        </p>
+        <pre id="shCMD"><code>
+            sudo [command]
+            ls
+            ls -la
+            pwd
+            cd
+            cd ../path/to/your\_folder
+            echo -e "text strings to be printed"
+            chmod 755 file.sh
+            chmod u+x file.sh
+            vi file_to\ be_opened
+            mv ../original/folder/file.txt ../../destination_folder/new_name.txt
+            cp original/folder/file.txt destination_folder/new_name.txt
+            less ../../path/new_file_name
+            touch ../../path/new_file_name
+            mkdir ../../path/new_folder_name
+            rm file.txt
+            rm -rf folder
+            man command_to_see
+            open .
+        </code></pre>
+        <p>
+            In the above code block, the last command is MacOS-specific.  It is an AppleScript to "open" a folder in Finder.app or a specific file using the default app for that type of extension.  The "period" (".") after the "open" command means you want to open the current folder location, which induces the Finder.app to become active and open the folder.
+        </p>
+        The typical command format is: <b>[command] [option(s)] [file/folder/file paths]</b>.  Spaces are functional in shell commands, so if spaces are in a file/folder name, they have to be called literally by "escape space" ("\ ").  Auto-completion can be done using <b>[tab]</b>.  You can concatenate several commands to run in sequence by "<b>;</b>".  You can also run a process in background by "<b>&</b>".  There are a few important points for the commands
+        <ul>
+            <li>sudo</li>
+            <ul>
+                <li>"<b>s</b>uper <b>u</b>ser <b>do</b>" is a top level user command to tell the computer do the command</li>
+                <li>using it will prompt users to input system administrator password (terminal will accept keystrokes without showing in the console)</li>
+                <li>it can do most system-wide software/file handling</li>
+                <li>misuse of sudo can result in deleting vital files for a computer</li>
+            </ul>
+            <li>ls</li>
+            <ul>
+                <li>"<b>l</b>i<b>s</b>t" all the files and folders in a folder/directory you're currently in</li>
+                <li>"-la" is a concatenated option string indicating users want a "list format" ("l") of all ("a") stuff, visible or invisible (start with ".", e.g. the file ".gitignore" in a git repository), onto the Terminal console output.</li>
+                <li>file path can be specified after the command & all options (if there are any)</li>
+                <li>wild characters are allowed: e.g. "tick*" represents file/folder names on the same path starting with "tick", "*.csv" represents all csv (comma separated values) filess on the same path</li>
+            </ul>
+            <li>pwd: show "where are you right now" in your computer for your active terminal window</li>
+            <li>cd</li>
+            <ul>
+                <li>"<b>c</b>hange <b>d</b>irectory"</li>
+                <li>the default folder path (when you don't specify file path) is at the user's home directory</li>
+                <li>relative paths can use "../" (one folder back) recursively if you want a few folders back</li>
+                <li>absolute paths start with "/" folder, which is the root directory of all files and folders</li>
+            </ul>
+            <li>echo</li>
+            <ul>
+                <li>this is for printing textstrings</li>
+                <li>Double quotes allow variations in the textstring (can add other variables/commands using a specific format) while single quotes only allow textstrings being interpreted literally</li>
+                <li>"-e" option is "<b>e</b>xpression" -- this option can be omitted in some cases; always including "-e" option is a good practice to ensure "echo" will work as intended</li>
+            </ul>
+            <li>chmod</li>
+            <ul>
+                <li>"<b>ch</b>ange file <b>mod</b>e": changing permissions of a file/folder</li>
+                <li>wild characters are allowed</li>
+                <li>two methods are commonly used: alphabets with +/- permission & a three-digit number</li>
+                <li>there are 3 user groups by default in a computer</li>
+                <ul>
+                    <li><b>u</b> -- the current <b>u</b>ser</li>
+                    <li><b>g</b> -- users sharing the same internal network (<b>g</b>roup) with the current user</li>
+                    <li><b>a</b> -- <b>a</b>ll users of this computer</li>
+                </ul>
+                <li>there are 3 file permissions in a computer</li>
+                <ul>
+                    <li>"r" or "4" -- <b>r</b>ead, allow file content to be accessed</li>
+                    <li>"w" or "2" -- <b>w</b>rite, allow file edits to be saved</li>
+                    <li>"x" or "1" -- e<b>x</b>ecute, allow the computer to run the file content as codes</li>
+                </ul>
+                <li>in the "alphabet +/- permission" method, you would each time add (+) or remove (-) one user (u/g/a) permission (r/w/x) -- e.g. "u+x" means the current user can now excute the file</li>
+                <li>in the "three-digit number" method, permissions add listed in "uga" format above</li>
+                <ul>
+                    <li>numbers are added together, for example all permissions (r+w+x) = 4+2+1 = 7, read-write only (r+w) = 4+2 = 6 etc</li>
+                    <li>755 = current user all permission (r+w+x = 7), group users only have read-excution (r+x = 5) and all other users also only have read-excution (r+x = 5)</li>
+                    <li>700 = current user all permission (r+w+x = 7), group users have no permission (0) and all other users also have no permission (0)</li>
+                    <li>user permission must have no less than the permission granted to group & all other users</li>
+                </ul>
+            </ul>
+            <li>vi</li>
+            <ul>
+                <li>it is a native UNIX text editor; there's a "vi improved" (vim) software, also natively inside MacOS</li>
+                <li>it is a command-line interface (CLI) software able to edit, view and save all human-readable scripts (sh, txt, csv, py, R, C...)</li>
+                <li>software-based binary files (e.g. odp, doc, xlsx, pdf, bin) are read as literal characters (computer-understandable characters) in vi</li>
+                <li>a few useful functions are listed <a href="#viGen">below</a></li>
+            </ul>
+            <li>mv / cp</li>
+            <ul>
+                <li><b>m</b>o<b>v</b>e / <b>c</b>o<b>p</b>y a file/folder from the original position to a new position</li>
+                <li>files/folders can be renamed by moving/copying the old file into a new file name (along with the path)</li>
+            </ul>
+            <li>less</li>
+            <ul>
+                <li>this is a native UNIX CLI file viewer software</li>
+                <li>only up/down arrow keys are functional because all characters are reorganised according to the width of the terminal window</li>
+                <li>Some common commands are listed below; some are shared with vi</li>
+                <ul>
+                    <li><b>q</b> = <b>q</b>uit</li>
+                    <li><b>/</b> = search for textstring pattern (spaces and punctuation ok) behind this command; if nothing is behind, it searches the last-searched textstring pattern</li>
+                    <li><b>999[enter]</b> = move vi cursor down 999 lines; <b>[enter]</b> alone = <b>1[enter]</b></li>
+                    <li><b>999k</b> = move vi cursor up 999 lines; <b>k</b> alone = <b>1k</b></li>
+                </ul>
+            </ul>
+            <li>touch</li>
+            <ul>
+                <li>initiates an empty file with a filename in the designated path</li>
+                <li>users can initiate multiple files on the same path by "<b>{a,b,c}</b>"</li>
+            </ul>
+            <li>mkdir</li>
+            <ul>
+                <li>"<b>m</b>a<b>k</b>e <b>dir</b>ectory": initiate an empty folder with a foldername in the designated path</li>
+                <li>users can initiate multiple files on the same path by "<b>{a,b,c}</b>"</li>
+            </ul>
+            <li>rm</li>
+            <ul>
+                <li>"<b>r</b>e<b>m</b>ove": remove a file</li>
+                <li>"-r" option is needed for removing a folder</li>
+                <li>"-f" option is "<b>f</b>orced"; <b>can be DANGEROUS</b>; the file/folder removal is done as requested without asking you for permissions</li>
+                <li>users can remove multiple files/folders on the same path by "<b>{a,b,c}</b>"</li>
+                <li>wild characters are allowed</li>
+            </ul>
+            <li>man: show the <b>man</b>ual of the command in enquiry in "less" CLI viewer</li>
+        </ul>
+        Here are a few useful functions for vi.  There are some "set" environments you can set into default by the "<b>~/.vimrc</b>" hidden file.  Ask if you want to make vi prettier and/or more functional than the default.
+        <pre id="viGen"><code>
+            :w
+            :wq
+            :q
+            :q!
+            :set number
+            :set nonumber
+            /text string
+            /
+            :noh
+        </code></pre>
+        <ul>
+            <li><b>:</b> = vi command indicator, some can be concatenated</li>
+            <li><b>w</b> = save</li>
+            <li><b>q</b> = quit; quit would be successful only if the current version is identical to the last saved one</li>
+            <li><b>q!</b> = quit without save</li>
+            <li><b>set number</b> = show line number; "<b>nonumber</b>" means the opposite</li>
+            <li><b>/</b> = search for textstring pattern (spaces and punctuation ok) behind this command; if nothing is behind, it searches the last-searched textstring pattern</li>
+            <li><b>noh</b> = <b>no h</b>ighlight</li>
+        </ul>
+        A few important keystrokes for vi apart from arrow keys; a list of commands are <a href="https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/">available</a>.
+        <ul>
+            <li><b>i</b> = start "<b>i</b>nsert" mode</li>
+            <li><b>v</b> = start "<b>v</b>isual" mode; for highlighting using arrow keys</li>
+            <li><b>o</b> = start "insert" mode on a new line</li>
+            <li><b>[esc]</b> = leave any special (e.g. insert, visual...) mode</li>
+            <li><b>[shift]6</b> = to the start of the line</li>
+            <li><b>[shift]4</b> = to the end of the line</li>
+            <li><b>999[enter]</b> = move vi cursor down 999 lines; <b>[enter]</b> alone = <b>1[enter]</b></li>
+            <li><b>999k</b> = move vi cursor up 999 lines; <b>k</b> alone = <b>1k</b></li>
+            <li><b>dd</b> = cut (when not in "insert" mode)</li>
+            <li><b>yy</b> = copy (when not in "insert" mode)</li>
+            <li><b>p</b> = paste after line (when not in "insert" mode; paste the line below the vi typing cursor)</li>
+            <li><b>[shift]p</b> = paste before line (when not in "insert" mode; paste the line above the vi typing cursor)</li>
+            <li><b>u</b> = <b>u</b>ndo</li>
+            <li><b>[ctrl]r</b> = <b>r</b>edo; undo the undo</li>
+            <li><b>r</b> = <b>r</b>eplace the current character vi cursor is at</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+
+        <h2 id="gvc">Set-up git</h2>
+        <p>Check whether you have git already!</p>
+        <pre id="gitCheck"><code>
+            git --version
+            git config --list --show-origin
+        </code></pre>
+
+        There are two ways <a href="https://git-scm.com/downloads">installing</a> git:
+        <ul>
+            <li>download and run the git installer</li>
+            <li>[Linux-Ubuntu] <a href="https://linuxize.com/post/how-to-install-git-on-ubuntu-18-04/">apt</a>: <b>sudo apt install git</b></li>
+            <li>[Linux-Fedora] <a href="https://tecrobust.com/how-to-install-git-on-linux-fedora-31/">dnf</a>: <b>sudo dnf install git-all</b></li>
+            <li>[Mac] homebrew: <b>brew install git</b></li>
+            <li>[Mac] git is already in xcode</li>
+        </ul>
+
+        After git is available for use, we need to <a href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup">set-up</a> the user identity (can be <a href="https://stackoverflow.com/questions/3860112/multiple-github-accounts-on-the-same-computer">multiple</a> if no "--global" option)
+        <pre id="gitUser"><code>
+            git config --global user.name "Any Name"
+            git config --global user.email email.for@overleaf.com
+        </code></pre>
+        <p>
+            Then you git is ready for connection with Overleaf.  This is a short online <a href="https://www.scivision.co/overleaf-git-direct/">tutorial</a> on using git directly with Overleaf.
+        </p>
+        <a href="#top">Back to the Top</a>
+
+        <h2 id="pTex">Get the TeX repository working</h2>
+        <p>
+            Start an <a href="https://www.overleaf.com/">Overleaf</a> account with your <b>academic email</b>.  Or else you <a href="https://www.overleaf.com/learn/how-to/How_do_I_push_a_new_project_to_Overleaf_via_git%3F">cannot</a> use git on Overleaf unless you pay.
+        </p>
+        Steps of making a git-sync Overleaf project:
+        <ol>
+            <li>Start an overleaf project</li>
+            <li>Click the top-left "Overleaf menu" button and choose sync method "Git"</li>
+            <li>Run the "<b>git clone https://git.overleaf.com/...</b>" link in the Terminal</li>
+            <li>Manipulate the sync folder in your computer like you manipulate other local folders</li>
+        </ol>
+        Note that there is a hidden folder "<b>.git/</b>" in the sync folder.  This folder is not directly human-readable but it contains the whole repository history.  Check the git history (in "less" text viewer) by
+        <pre id="gitLog"><code>
+            git log
+        </code></pre>
+        You can check whether you have stuff not yet sync with Overleaf by the following command.  It should be empty if you did not change anything since the last sync or you've reverted back to the identical status from that status.
+        <pre id="gitStat"><code>
+            git status
+        </code></pre>
+        <a href="#top">Back to the Top</a>
+
+        <h2 id="pbib">Make the Bibliography</h2>
+        <p>
+            Ask if you don't have shell scripts "<b>bibWrite.sh</b>", "<b>bibAll.sh</b>" and "<b>gPush.sh</b>".  Set-up the scripts accordingly as guided.  You should have stored the scripts in a folder with the path registered in the program path, made the scripts excutable (and set alias if necessary).
+        </p>
+        bibWrite.sh
+        <ul id="bibMake">
+            <li>This script collect bibliography entries from the tex file and bib folder provided by user</li>
+            <li>A simple user manual can be found by running the script name only</li>
+            <li>Steps to make an Overleaf bibliography synced with the computer are</li>
+            <ol>
+                <li>Type bibWrite.sh, then space</li>
+                <li>Pull the tex file to Terminal</li>
+                <li>Pull the bib folder to Terminal</li>
+                <li>Press [enter]</li>
+                <li>Run " <b>gPush.sh "commit message"</b> " command</li>
+            </ol>
+        </ul>
+        bibAll.sh
+        <ul>
+            <li>This script collect all bibliography entries from the bib folder provided by user</li>
+            <li>The purpose is to create an overall bibliography to aid easy citation when writing the tex file</li>
+            <li>It is not recommended using this to make the final bibliography; bibWrite.sh should be used instead</li>
+            <li>A simple user manual can be found by running the script name only</li>
+        </ul>
+        gPush.sh
+        <ul>
+            <li>This script streamlines the git push process into one CLI.</li>
+            <li>A simple user manual can be found by running "<b>gPush.sh h</b>"</li>
+        </ul>
+        <p>
+            Let's start making data in the bib folder for the scripts.  Start a bibliography folder (with any name you want) and save every bibliography entry in a separate file in this bibliography folder.  The file name must be the same as the citation tag of this bibliography entry.  In this folder, users can put other files (if you like) such as the pdf version of the paper, supplementary documents and other stuff.  Then you're good to run the bibAll.sh for an overall bibliography file or use the bibWrite.sh to generate a special bibliography for the tex file.
+        </p>
+        <p>Remember to push to Overleaf!</p>
+        <a href="#top">Back to the Top</a>
+
+        <h1 id="cite">Citations</h1>
+        Calling citations in TeX is separated into two parts, the environment (lines above the \begin{document}) and the content (lines between the \begin{document} and \end{document}).  The general format for using a BibTeX package in TeX is
+        <pre id="bibTeX"><code>
+            \documentclass{article}
+            \usepackage[
+                autocite = inline, % superscript
+                backend = biber,
+                sortcites = true,
+                style = authoryear, % numeric, nature
+                maxcitenames = 3,
+                maxbibnames = 7
+            ]{biblatex}
+            \bibliography{bib_no_ext}
+            \renewbibmacro{}{} % optional, change some formats in the reference list
+            \DeclareFieldFormat[bib_style]{field}{#1} % optional
+            % change some formats in the reference list; #1 = bib data with other surrounding modified format
+
+            \begin{document}
+
+            text text \autocite{bib_tag} more text
+
+            \nocite{*}\printbibliography
+
+            \end{document}
+        </code></pre>
+        <p>
+            There are some <a href="https://www.overleaf.com/learn/latex/Articles/Getting_started_with_BibLaTeX">general</a>, <a href="http://www.khirevich.com/latex/biblatex/">option-related</a>, <a href="https://tex.stackexchange.com/questions/10682/suppress-in-biblatex">"In:" macro</a>, <a href="https://tex.stackexchange.com/questions/40023/biblatex-no-pages-for-article">pages</a>, <a href="https://tex.stackexchange.com/questions/94089/remove-quotes-from-inbook-reference-title-with-biblatex">paper title</a>, <a href="https://tex.stackexchange.com/questions/81569/biblatex-parentheses-around-the-volume-number-of-an-article">journal number</a> and <a href="https://tex.stackexchange.com/questions/145615/remove-punctuation-comma-after-volume-number-in-biblatex">journal details</a> formating instructions I have found.  A <a href="http://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf">cheatsheet</a> is also available for more complete understanding.  More should be scattered all around in the internet.
+        </p>
+        There are a few main points in the code block:
+        <ol>
+            <li>"bib_no_ext"</li>
+            <ul>
+                <li>relative path allowed</li>
+                <ul>
+                    <li>Overleaf limited the relative path can only be within the folder of the tex file</li>
+                    <li>so the overall bib file (not the bib data folder) can only be on the same level as the tex or in one of its subfolders</li>
+                </ul>
+                <li>bib file without extension ".bib"</li>
+            </ul>
+            <li>the top four options are mostly for effective citation (you'd know exactly what biblatex is using, so it's easier to modify when searching for solutions whenever there's a problem)</li>
+            <li>there are several common alternatives listed in the commented part of respective option lines</li>
+            <li>spaces and new lines in the biblatex options are solely for easy reading</li>
+        </ol>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="fig">Figures</h1>
+        If you want to initiate a figure, Overleaf already can auto-complete a figure framework for you.  The basic outline of the floating figure environment in a tex file is
+        <pre id="figCode"><code>
+            \documentclass{article}
+            \usepackage{graphicx, float}
+            \graphicspath{{../path/1/}{path_2/}{../../path_3/}}
+
+            \begin{document}
+
+            text text text (Fig. \ref{tag}).  More text
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=.9\linewidth]{path/fig.pdf}
+                \caption[short caption]{Full caption}
+                \label{tag}
+            \end{figure}
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>"H" option is only appear in the "float" package; it is to pin the floating figure environment at your designated position (or else TeX would find the "best" position for your figure which can be miles away from where you want)</li>
+            <li>In "\includegraphics", apart of "width" option you can also use "height" option</li>
+            <li>You can use any decimal number if you want your figure smaller than width of a normal page; you can magnify/constrict a figure; alternatively you can use 7cm / 5in to indicate the exact length parameter of you figure</li>
+            <li>figure can be in other formats, e.g. jpg, jpeg, png, tif, tiff...</li>
+            <li>default \caption is above the \includegraphics, so just revert these two lines</li>
+            <li>\label is tagging the figure; any \label can only be defined in the document once</li>
+            <li>\ref only output a number; this number is changeable according to your graphics label sequence in the figure environment</li>
+        </ul>
+        <p>
+            A general suggestion on how to write an effective graphic caption can be found <a href="http://abacus.bates.edu/~ganderso/biology/resources/writing/HTW_Guide_Table-Figures_9-30-08.pdf">here</a>, the link is from <a href="https://www.imperial.ac.uk/people/s.pawar">Dr. Samraat Pawar</a>.
+        </p>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="tab">Tables</h1>
+        There are two commonly used table format: one from the base TeX and another one (allow multi-page tables) from the "longtable" package.  Computational syntax (= computing grammar) between the two are the same so I would only show the flexible "longtable" with the most flexible column options.
+        <pre id="tabCode"><code>
+            \documentclass{article}
+            \usepackage{longtable}
+
+            \begin{document}
+
+            Note that the same referencing method (Table \ref{tag})!  More text
+            
+            \begin{table}[H]
+                \centering
+                \caption[short caption]{Full caption}
+                \begin{longtable}{p{.1\linewidth}|p{.4\linewidth}p{.4\linewidth}}\hline
+                r1c1 & r1c2 & r1c3\\\hline
+                r2c1 & r2c2 & r2c3 \\
+                r3c1 & r3c2 & r3c3\\
+                \hline\end{longtable}
+                \label{tag}
+            \end{table}
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>Note that the referencing method is the same; TeX sequence tables on a separate queue from figures</li>
+            <li>Apart from using "<b>p{.3\linewidth}</b>", you can use l/c/r (left/centre/right).  But using the former method makes lengthy text automatically becomes multi-line text</li>
+            <li>\hline is horizontal line; it can be put at the end of a line, at the front or its own line in a table in correct position (can't put it in the middle of a column, for example)</li>
+            <li>"<b>&</b>" in TeX is column separator, so that's the reason using & as a literal in TeX has to be escaped (i.e. "<b>\&</b>")</li>
+            <li>Double backslashes ( <b>\\</b> ) mean "new line"</li>
+            <li>Vertical separator ( <b>|</b> ) indicates drawing of a visible column line</li>
+            <li>Spaces around the separators/new line characters are ignored; they are just for easy reading</li>
+        </ul>
+        <p>
+            A general suggestion on how to write an effective table caption can be found <a href="http://abacus.bates.edu/~ganderso/biology/resources/writing/HTW_Guide_Table-Figures_9-30-08.pdf">here</a>, the link is from <a href="https://www.imperial.ac.uk/people/s.pawar">Dr. Samraat Pawar</a>.
+        </p>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="eqn">Equations</h1>
+        Multiple mathematics typing methods are available but in fields outside mathematics, academic writings usually need to show main equations.  Using TeX, you can number/unnumber equations by a pair of asterisk ( <b>*</b> )
+        <pre id="eqCode"><code>
+            \documentclass{article}
+
+            \begin{document}
+
+            Note that the same referencing method (Eq. \ref{tag})!  More text
+            
+            \begin{equation}
+                x = 2\times y
+                \label{tag}
+            \end{equation}
+
+            \begin{equation*}
+                x = 2_{2}\times y^{e+b}
+            \end{equation*}
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>The top equation is numbered while the other is not</li>
+            <li>Equation environment only support a single-line equation centered in a page.  A multi-line equation would need the "<b>align</b>" <a href="https://latex.wikia.org/wiki/Align_(environment)">environment</a></li>
+            <li>An inline equation can be made easy by putting the mathematical elements within two dollar signs (e.g. variable x = $x$)</li>
+            <li>\label is optional; if you don't need to reference the equation, why bother give it a name?</li>
+            <li>Underscore ( <b>_</b> ) is for subscript while carat ( <b>^</b> ) is for superscript; equivalent command in normal text is <b>\textsubscript{}</b> and <b>\textsuperscript{}</b></li>
+            <li>Curly brackets for super/subscripts are necessary when multiple characters need to be modified; it is optional when it is only one character</li>
+            <li>After a TeX command, it is necessary to give it a space when a letter is right behind it; it is optional if it is a number</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="hplk">Hyperlinks</h1>
+        Hyperlinks in pdf are powerful because it can fulfill the readers' immediate curiosity/criticism.  It is easy to make them pretty and <a href="https://www.tutorialspoint.com/tex_commands/href.htm">flexible</a> in TeX by package "hyperref".  You can even define your own mix of colour using "<a href="https://texblog.org/2015/12/08/custom-colors-in-latex/">xcolor</a>" package.  But usually an academic writing only uses black except url in blue.  <a href="https://tex.stackexchange.com/questions/4503/how-do-i-specify-color-in-rgb-using-hypersetup-in-hyperref">Linked</a> is another method to define the <b>\hypersetup{}</b>.
+        <pre id="hplkCMD"><code>
+            \documentclass{article}
+
+            \hypersetup{
+                colorlinks=true,
+                linkcolor=red,
+                filecolor=green,
+                urlcolor=blue,
+                citecolor=black
+            }
+
+            \begin{document}
+
+            This is a link \href{https://hello.org}{text}.  A tag is also a link \ref{tag}.
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>"colorlinks = true" is text colour change; false is having a box border surrounding the linked text</li>
+            <li>"linkcolor" is for links inside pdf, normally appear in the Table of Contents and <b>\ref{}</b></li>
+            <li>"filecolor" is rarely functional in academic writings because there's no <a href="https://www.overleaf.com/learn/latex/Hyperlinks">external linked files</a></li>
+            <li>"urlcolor" usually changes links and doi in the reference list; it also changes literal url in the pdf</li>
+            <li>"citecolor" is the colour of the citation; if you use numeric cites, the number has colour change; if you use inline text, numbers in the cite have colour changes</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="sep">Separating Sections</h1>
+        Big files are usually unpleasant to both us and computers.  It is because managing a big file takes time to read and find useful things.  Using the "subfile" package, we can
+        <ol>
+            <li>collect content from child files using the parent file to make the finished document</li>
+            <li>preview each child file without wasting time to load others; it is because the environment from the parent file is clipped onto each individual child file</li>
+        </ol>
+        In the parent file,
+        <pre id="sbfCode"><code>
+            \documentclass{article}
+
+            \usepackage{subfiles}
+            \begin{document}
+
+            \subfile{path/child}
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>The "subfiles" package should be the last one to load after all environments are set; this is to ensure all environment settings can be transferred to the child files</li>
+            <li>child files in <b>\subfile{}</b> do not need the extension .tex</li>
+            <li>The sequence of subfile commands equals to the sequence of the parts in the final pdf document</li>
+        </ul>
+        In the child file,
+        <pre><code>
+            \documentclass[../path/to/parent.tex]{subfiles}
+
+            \begin{document}
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>Note that <b>\documentclass</b> has changed, with a necessary option to indicate the source of environment (i.e. where is the parent file) with .tex extension and the filetype is "subfiles"</li>
+            <li>Also note that extra packages can be loaded into each child file; the package in child is not shared with other child files</li>
+            <li>All command usage is exactly the same as a normal TeX files</li>
+            <li>Each child file can either be a standalone document or as a part of the overall document</li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="oth">Others</h1>
+        <h2 id="manCMD">Manual commands</h2>
+        <pre id="newCode"><code>
+            \documentclass[a4paper]{article}
+
+            \newcommand{\sf}{stuff}
+
+            \begin{document}
+
+            text text \sf, more \sf\ text; or \sf s?
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>When you have repeated phrases or symbols</li>
+            <li>Using the command can minimise typing and maximise accuracy</li>
+            <li>Note that after a command, either a symbol or a "backslash" ( <b>\</b> ) must be used</li>
+            <li>A space after a command is omitted; this is particularly useful when you need to make a commanded phrase plural (i.e. <b>\sf s</b>)</li>
+        </ul>
+
+        <a href="#top">Back to the Top</a>
+        
+        <h2 id="titpg">Manual titlepage formatting</h2>
+        <pre id="titCode"><code>
+            \documentclass[a4paper]{article}
+
+            \makeatletter
+            \def\@maketitle{
+            \includegraphics[width=7cm]{path/to/logo.jpg}\\[3.5cm]
+            \begin{center}
+                {\Huge \bfseries \sffamily \@title}\\[5cm]
+                {\Large \@author}\\
+                {\Large \@date}\\[5cm]
+                
+                A thesis submitted for the partial fulfilment of the requirements for the degree of Master of Research at Imperial College London
+                
+                \vspace{1cm}
+                
+                Formatted in the Journal style of \textit{Journal of Ecology}
+                
+                Submitted for the MRes in Computational Methods in Ecology and Evolution
+            \end{center}
+            }
+            \makeatother
+
+            \title{text, can include manual commands}
+            \author{it's just a labelled text}
+            \date{if empty it'll give you date of compiling the pdf}
+
+            \begin{document}
+
+            \maketitle
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li><b>\makeatletter</b> & <b>\makeatother</b> <a href="https://tex.stackexchange.com/questions/8351/what-do-makeatletter-and-makeatother-do">change</a> the "@" from literal text to functional code & vice versa respectively; this allows variable inputs</li>
+            <li><b>\@</b> indicates a variable which take respective text input later in the code</li>
+            <li><b>\def</b>: indicate a definition of a command right after this command</li>
+            <li>You can incorporate multiple text formating commands within " <b>{ }</b> "</li>
+            <li><b>\vspace{}</b>: indicate how far down should the next text be put; it can take "mm", "cm", "in" as units (probably more, but these three are normally used)</li>
+            <li>Note that all format settings are done before the document begins</li>
+        </ul>
+
+        <a href="#top">Back to the Top</a>
+        
+        <h2 id="supInfo">Supplementary Information section</h2>
+        <pre id="supCode"><code>
+            \documentclass[a4paper]{article}
+
+            \newcommand{\beginSupp}{
+                \setcounter{table}{0}
+                \renewcommand{\thetable}{AT\arabic{table}}
+                \setcounter{figure}{0}
+                \renewcommand{\thefigure}{AF\arabic{figure}}
+                \setcounter{equation}{0}
+                \renewcommand{\theequation}{AQ\arabic{equation}}
+                }
+
+            \begin{document}
+
+            \beginSupp
+
+            stuff including tables / figures / equations / nothing
+
+            \end{document}
+        </code></pre>
+        <ul>
+            <li>The above code reset counters after the manual command <b>\beginSupp</b> and set the format of table/figure/equation numbering</li>
+            <li>There is also an <a href="https://support.authorea.com/en-us/article/how-to-create-an-appendix-section-or-supplementary-information-1g25i5a/">tutorial</a> showing how to do it</li>
+            <li>Reset origin can be any integers</li>
+            <li><b>\thetable</b>, <b>\thefigure</b>, <b>\theequation</b> are the three internal command to count the number of labels for table/figure/equation after the origin number respectively</li>
+            <li><b>\arabic{}</b> means the number is to be appeared as a arabic number; we can also use <b>\roman{}</b> and <b>\Roman{}</b> for small and big roman numbering systems respectively</li>
+            <li>The same labeling system is used for <a href="#tab">Tables</a>, <a href="#fig">Figures</a> and <a href="#eqn">Equations</a> respectively after the deployment of counter reset command</li>
+        </ul>
+
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="trap">Inevitable trap(s)</h1>
+        <ul>
+            <li>Overleaf suddenly can't compile a file when all codes are clearly correct -- try clearing cache files</li>
+            <ol>
+                <li>go to the pdf part</li>
+                <li>click to open the "Logs and output files" interface</li>
+                <li>scroll to the bottom and click the "rubbish bin" (clear cached files)</li>
+                <li>click "clear cache", wait and recompile the file</li>
+            </ol>
+            <li>Accidentally committed a huge file and Git is stuck at that point -- two methods but recommend the first (when only you are the sole author of a repository)</li>
+            <ul>
+                <li>clone the repository again and replace the stuck "<b>.git/</b>" by the new one</li>
+                <ol>
+                    <li>clone the git repository just like you've done <a href="#pTex">before</a> at anywhere on the computer</li>
+                    <li>delete your old/stuck "<b>.git/</b>"</li>
+                    <li>move your new "<b>.git/</b>" to the location where you've deleted your old "<b>.git/</b>"</li>
+                    <li>delete the remaining content for your newly-cloned git repository</li>
+                    <li>add the file name of the big/problematic file into "<b>.gitignore</b>" file as a new line and save the "<b>.gitignore</b>" file</li>
+                    <li>commit and push your repository again</li>
+                </ol>
+                <li>using <a href="https://www.jquery-az.com/undo-last-commit-in-git/">options</a> given by Git</li>
+                <ul>
+                    <li>remember to backup all your files before you use this method</li>
+                    <li>three methods are given, including "<b>reset --head</b>", "<b>reset --soft</b>" and "<b>branch</b>"</li>
+                    <li>need to be very careful because it can revert the progress you've done since your last commit -- it is risky if you do not commit often</li>
+                </ul>
+            </ul>
+        </ul>
+
+        <a href="#top">Back to the Top</a>
+        
+        <h1 id="end">Conclusion</h1>
+        <p>
+            Like any computational languages, TeX and Git are hard at start.  But when you get to know them, they are fast and handy in helping you to do what you want.  Using a combination of the two can make complicated documents easier to read, manipulate with a smaller file sizes.  Smaller file sizes means your computer can handle the files quicker with higher accuracy.
+        </p>
+        
+        <h1 id="ref">External Resource Bin</h1>
+        <ul>
+            <li><a href="https://mhasoba.github.io/TheMulQuaBio/intro.html">Computational Methods in Ecology and Evolution, Imperial College London</a></li>
+            <li><a href="https://github.com/ph-u/R_statistics/blob/master/note.pdf">Figures & Statistics in R </a></li>
+        </ul>
+        <a href="#top">Back to the Top</a>
+
+    </body>
+</html>
