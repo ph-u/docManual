@@ -3,22 +3,22 @@
     <style>
         .ct {text-align: center;font-size: 35px}
         warn {
-            background-color: #ffff00;
+            background-color: #333300;
             border: 1px solid #dd546e;
             display: block;
             padding: 10px;
-            color: #ff0099;
+            color: #ff0000;
         }
         pre code {
-            background-color: #777777;
+            background-color: #111111;
             border: 1px solid #dd546e;
             display: block;
             padding: 10px;
-            color: #990099;
+            color: #bb00bb;
         }
         body {
-            color: #eeee00;
-            background-color: #774400;
+            color: #00bbbb;
+            background-color: #000000;
             }
         table {
             border: 1px solid white;
@@ -164,13 +164,17 @@
         <p>It is common to run this program multiple times in order to refine the XY coordinate boundaries for the two RGB samples (columns 6-13) and pixel : unit ratio (column 15)</p>
 
         <pre><code>
-            bash /full/path/to/agalony.sh [py/r] [/full/path/of/photos] [nCPU] [clear?]
+            bash /full/path/to/agalony.sh [prc] [/full/path/of/photos] [nCPU]
         </code></pre>
         <table>
             <tr><th>Command component</th><th>Details</th></tr>
             <tr><td>bash</td><td>The language processor for agalony.sh</td></tr>
             <tr><td>/full/path/to/agalony.sh</td><td>This is the agalony.sh CLI and let the program to orientate itself (i.e. let the program knows where it is) in users' computer</td></tr>
-            <tr><td>py/r</td><td>Input either "py" or "r"; this is to indicate which language (python3 / R) will be used to translate the binary photo format into a plain text spreadsheet file (.csv)</td></tr>
+            <tr><td>prc</td><td><ul>
+	    	<li>p = python3 image interpreter (option 1) -- translate binary photo format into spreadsheet file (.csv)</li>
+	    	<li>r = Rscript image interpreter (option 2) -- identical function as python3 written in R (ver >=4.0.0)</li>
+	    	<li>c = clear intermediate files after pipeline finished (optional)</li>
+	    </ul></td></tr>
             <tr><td>/full/path/of/photos</td><td>Mark the location of the target directory for the pipeline to work on</td></tr>
             <tr><td>nCPU</td><td><ul>
                 <li>Indicate how many CPUs do the user want to use</li>
@@ -178,10 +182,6 @@
                 <li>The maximum number of CPU is recommended to be half the available CPU in the user's computer: this is because internal processes and user's activities also consume CPU -- overloading the CPU limit risks making the computer irresponsive</li>
                 <li>This field can be left empty if the user only uses one CPU and does not want the pipeline to clear intermediate files</li>
                 <li>Input the number "1" is needed if the user want the program to clear intermediate files even though only a single core is needed</li>
-            </ul></td></tr>
-            <tr><td>clear?</td><td><ul>
-                <li>This can be left empty if user does not intend to let the pipeline auto-delete the intermediate files</li>
-                <li>Input the word "clear" if needed</li>
             </ul></td></tr>
         </table>
         

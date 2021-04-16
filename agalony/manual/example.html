@@ -3,15 +3,15 @@
     <style>
         .ct {text-align: center;font-size: 35px}
         pre code {
-            background-color: #ffffff;
+            background-color: #111111;
             border: 1px solid #dd546e;
             display: block;
             padding: 10px;
-            color: #990099;
+            color: #bb00bb;
         }
         body {
-            color: #eeee00;
-            background-color: #774400;
+            color: #00bbbb;
+            background-color: #000000;
             }
         table {
             border: 1px solid white;
@@ -95,8 +95,9 @@
         <p>Next, we run the program for the first time and plot the intermediate outputs (*_agar.csv & *_fil.csv only) for checking. It is not recommended to plot the raw csv output because plotting one can take half an hour.</p>
 
         <pre><code>
-            bash /Users/username/Program/directory/agalony.sh py /Users/username/data/to/photos/directory 2
+            bash /Users/username/Program/directory/agalony.sh p /Users/username/data/to/photos/directory 2
         </code></pre>
+	<p>For v0.0.1, the first option would be "py" instead of "p"</p>
 
         <p>In the code, we use 2 CPU to parallel process 2 photos at a  time, using full paths for the program and photos.  Note that the path to photos ends with letters (or numbers), not a forward slash (" / ").</p>
 
@@ -169,8 +170,9 @@
         <p>Then with all data attribute set in place, we can go for the final run:</p>
 
         <pre><code>
-            bash /Users/username/Program/directory/agalony.sh py /Users/username/data/to/photos/directory 2 clear
+            bash /Users/username/Program/directory/agalony.sh pc /Users/username/data/to/photos/directory 2
         </code></pre>
+	<p>For v0.0.1, first option: "py"; there is also a 4th option "clear" to be equivalent to the "pc" compact option in v1.0.0</p>
 
         <p>And we get the result "00Colony.csv"</p>
         <table>
